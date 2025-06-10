@@ -6,7 +6,7 @@ let test = import.meta.env.VITE_API_KEY
 const App = () => {
   return (
     <div className="App">
-      API Key: ${test}
+      API Key: ${test}g
     </div>
   )
 }
