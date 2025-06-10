@@ -69,9 +69,9 @@ export function CreateMovieContainer(apiData) {
     }
     const tableOfMovies = apiData.results.map(function(obj){
         console.log(obj.adult)
-        return <Movie movieTitle={obj.title} rating={obj.vote_average} key={obj.id}/>
+        return <Movie movieTitle={obj.title} rating={obj.vote_average} key={obj.id} posterImage={obj.poster_path}/>
     })
-    
+
     return <div className="movie-container">
         {tableOfMovies}
     </div>
@@ -92,6 +92,7 @@ export function CreateMovieContainer(apiData) {
 function Movie(props) {
     return (
         <div key={props.id} className="movie">
+            <img src={`https://image.tmdb.org/t/p/w500${props.posterImage}`} alt={props.movieTitle} />
             <h3>x Watched</h3>
             <h3>x Favorite</h3>
             <h2>{props.movieTitle}</h2>

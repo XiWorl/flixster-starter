@@ -1,7 +1,18 @@
 
 
+.movie-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1vh;
+}
 
 
 .movie {
     background-color: aqua;
+    border-radius: 1vw;
+    width: 15vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    border: solid 3px;
 }
