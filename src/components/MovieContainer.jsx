@@ -3,14 +3,14 @@ import "../styles/MovieContainer.css";
 
 let defaultMovieData = []
 
-async function fetchData(page, setMovieData) {
+async function fetchData(page, apiKey) {
     const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
     const options = {
         method: "GET",
         headers: {
             accept: "application/json",
             Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZDhiN2UyODU3NGRkMDE2YjVmOGIyOTY0ZGFiMTgxNiIsIm5iZiI6MTc0OTUxMjI0My44NTc5OTk4LCJzdWIiOiI2ODQ3NzAzMzQ0OTAxMjhjMTMzZmNkMmUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.6YOq5-jEBXUeVzcmhnrZcI1DOYVpuTm0I-VE-lgJR5s",
+                `Bearer ${apiKey}`,
         },
     };
 
@@ -19,11 +19,11 @@ async function fetchData(page, setMovieData) {
     return json.results
 }
 
-export function CreateMovieContainer() {
+export function CreateMovieContainer({apiKey}) {
     const [movieData, setMovieData] = useState([]);
 
     useEffect(function () {
-        let result = fetchData(1) 
+        let result = fetchData(1, apiKey) 
         result.then(function(data) {
             console.log(data)
             setMovieData(data)

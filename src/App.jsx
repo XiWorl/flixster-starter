@@ -3,14 +3,14 @@ import { CreateMovieContainer } from './components/MovieContainer'
 import { Header } from './components/Header'
 import './App.css'
 
-let APIkey = import.meta.env.VITE_API_KEY
+let apiKey = import.meta.env.VITE_API_KEY
 
 
 const App = () => {
   return (
     <div className="App">
       <Header/>
-      <CreateMovieContainer/>
+      <CreateMovieContainer apiKey={apiKey}/>
     </div>
   )
 }
