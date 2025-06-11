@@ -3,7 +3,8 @@ import { CreateMovieContainer } from './components/MovieContainer'
 import { Header } from './components/Header'
 import './App.css'
 
-let test = import.meta.env.VITE_API_KEY
+let APIkey = import.meta.env.VITE_API_KEY
+
 
 const App = () => {
   return (

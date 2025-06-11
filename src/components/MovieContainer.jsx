@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "../styles/MovieContainer.css";
 
+let defaultMovieData = []
+
 async function fetchData(page, setMovieData) {
     const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
     const options = {
@@ -12,18 +14,22 @@ async function fetchData(page, setMovieData) {
         },
     };
 
-    fetch(url, options)
-        .then((res) => res.json())
-        .then((json) => {
-            console.log(json.results);
-            setMovieData(json.results);
-        })
-        .catch((err) => console.error(err));
+    let response = await fetch(url, options)
+    let json = await response.json()
+    return json.results
 }
 
 export function CreateMovieContainer() {
     const [movieData, setMovieData] = useState([]);
 
+    useEffect(function () {
+        let result = fetchData(1) 
+        result.then(function(data) {
+            console.log(data)
+            setMovieData(data)
+        })
+    }, []);
+    
     const tableOfMovies = movieData.map(function (obj) {
         return (
             <Movie
@@ -31,31 +37,16 @@ export function CreateMovieContainer() {
                 rating={obj.vote_average}
                 key={obj.id}
                 posterImage={obj.poster_path}
+                movieData={movieData}
             />
         );
     });
 
 
-    useEffect(function () {
-        fetchData(1, setMovieData);
-        console.log("here");
-    }, []);
-    
     return <div className="movie-container">{tableOfMovies}</div>;
 }
 
-//{
-// id: 1;
-// movieTitle: "";
-// rating: 0;
-// favorited: false;
-// watched: false;
-// overview: "";
-// posterImage: "";
-// releaseDate: "";
-// genre: "";
-// runTime: "";
-// }
+
 function Movie(props) {
     return (
         <div key={props.id} className="movie" onClick={onMovieClick}>
@@ -68,7 +59,7 @@ function Movie(props) {
                 <h3>x Favorite</h3>
             </div>
             <h2>{props.movieTitle}</h2>
-            {/* <h3>{props.rating}</h3> */}
+            
         </div>
     );
 }
@@ -81,5 +72,4 @@ export function Modal() {
 
 function onMovieClick() {
     console.log("click");
-    // if (modalVisibility === true) {return}
 }
