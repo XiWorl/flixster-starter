@@ -9,7 +9,7 @@ let apiKey = import.meta.env.VITE_API_KEY
 const App = () => {
   return (
     <div className="App">
-      <Header/>
+      <Header apiKey={apiKey}/>
       <CreateMovieContainer apiKey={apiKey}/>
     </div>
   )
