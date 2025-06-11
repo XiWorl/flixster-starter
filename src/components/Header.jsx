@@ -3,7 +3,11 @@ import "../styles/Header.css"
 
 
 async function searchData(apiKey, searchValue) {
-    const url = `https://api.themoviedb.org/3/search/collection?query=${searchValue}`;
+    let url = `https://api.themoviedb.org/3/search/collection?query=${searchValue}`;
+    if (searchValue == "" || searchValue == " ") {
+        url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`
+    }
+
     const options = {
         method: "GET",
         headers: {
@@ -15,26 +19,32 @@ async function searchData(apiKey, searchValue) {
 
     let response = await fetch(url, options)
     let json = await response.json()
-    return json.results
+    return json
 }
 
-function SearchBar(apiKey) {
+function SearchBar(apiKey, setMovieData) {
     const [input, setInput] = useState("")
 
     function onChange(event) {
         setInput(event.target.value)
     }
 
-    function onSearchClick(event) {
-        searchData(apiKey, input).then(function(data) {
-            console.log(data)
+    function onSearchClick(event, priorityInput) {
+        let selectedInput = priorityInput != null ? priorityInput : input
+
+        searchData(apiKey, selectedInput).then(function(data) {
+            setMovieData(data.results)
         })
+    }
+    function onClearClick() {
+        setInput("")
+        onSearchClick(apiKey, "")
     }
     return (
         <div id="searchbar-options">
             <input type="text" id="search-bar" onChange={onChange} placeholder="Search.." value={input}></input>
             <button onClick={onSearchClick} id="search-submit">Submit</button>
-            <button id="search-clear">Clear</button>
+            <button onClick={onClearClick}id="search-clear">Clear</button>
         </div>
     )
 }
@@ -47,7 +57,7 @@ export function Header(props) {
             </div>
 
             <div id="search-options">
-                {SearchBar(props.apiKey)}
+                {SearchBar(props.apiKey, props.setMovieData)}
 
                 <select id="dropdown">
                     <option value="volvo">Sort by</option>

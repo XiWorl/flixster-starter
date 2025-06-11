@@ -7,10 +7,12 @@ let apiKey = import.meta.env.VITE_API_KEY
 
 
 const App = () => {
+  const [movieData, setMovieData] = useState([]);
+  
   return (
     <div className="App">
-      <Header apiKey={apiKey}/>
-      <CreateMovieContainer apiKey={apiKey}/>
+      <Header apiKey={apiKey} setMovieData={setMovieData}/>
+      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey}/>
     </div>
   )
 }

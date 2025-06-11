@@ -19,21 +19,25 @@ async function fetchData(page, apiKey) {
     return json.results
 }
 
-export function CreateMovieContainer({apiKey}) {
-    const [movieData, setMovieData] = useState([]);
+export function CreateMovieContainer({apiKey, movieData, setMovieData}) {
 
     useEffect(function () {
         let result = fetchData(1, apiKey) 
         result.then(function(data) {
-            console.log(data)
             setMovieData(data)
         })
     }, []);
     
     const tableOfMovies = movieData.map(function (obj) {
+        let movieTitle = ""
+        if (obj.title != null) {
+            movieTitle = obj.title
+        } else if (obj.name != null) {
+            movieTitle = obj.name
+        }
         return (
             <Movie
-                movieTitle={obj.title}
+                movieTitle={movieTitle}
                 rating={obj.vote_average}
                 key={obj.id}
                 posterImage={obj.poster_path}
@@ -48,10 +52,16 @@ export function CreateMovieContainer({apiKey}) {
 
 
 function Movie(props) {
+    let posterImage = props.posterImage
+    if (posterImage === null) {
+        posterImage = "src/assets/Placeholder Image.png"
+    } else {
+        posterImage = `https://image.tmdb.org/t/p/w500${props.posterImage}`
+    }
     return (
         <div key={props.id} className="movie" onClick={onMovieClick}>
             <img
-                src={`https://image.tmdb.org/t/p/w500${props.posterImage}`}
+                src={posterImage}
                 alt={props.movieTitle}
             />
             <div className="interactable-container">
