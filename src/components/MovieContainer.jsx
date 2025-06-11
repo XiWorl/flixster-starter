@@ -136,7 +136,7 @@ export function CreateMovieContainer(apiData) {
 // }
 function Movie(props) {
     return (
-        <div key={props.id} className="movie">
+        <div key={props.id} className="movie" onClick={onMovieClick}>
             <img src={`https://image.tmdb.org/t/p/w500${props.posterImage}`} alt={props.movieTitle} />
             <div className="interactable-container">
                 <h3>x Watched</h3>
@@ -146,4 +146,18 @@ function Movie(props) {
             {/* <h3>{props.rating}</h3> */}
         </div>
     )
+}
+
+export function Modal() {
+    const [modalVisibility, setModalVisibility] = useState(false)
+
+    return(
+        div
+    )
+}
+
+function onMovieClick() {
+
+    console.log("click")
+    // if (modalVisibility === true) {return}
 }
