@@ -1,0 +1,28 @@
+
+#header-div {
+    display: flex;
+    flex-direction: column;
+    background-color: #282c34;
+    padding: 1vh;
+}
+
+#search-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 3vw;
+}
+
+button {
+  background-color: #282c34;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #777;
+  color: white;
+}
