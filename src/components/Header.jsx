@@ -1,6 +1,21 @@
 import { useState } from 'react'
 import "../styles/Header.css"
 
+function SearchBar() {
+    const [input, setInput] = useState("hello")
+
+    function onChange(event) {
+        setInput(event.target.value)
+    }
+    return (
+        <div id="searchbar-options">
+            <input type="text" id="search-bar" onChange={onChange} placeholder="Search.." value={input}></input>
+            <button id="search-submit">Submit</button>
+            <button id="search-clear">Clear</button>
+        </div>
+    )
+}
+
 export function Header() {
     return (
         <div id="header-div">
@@ -9,11 +24,7 @@ export function Header() {
             </div>
 
             <div id="search-options">
-                <div id="searchbar-options">
-                    <input type="text" id="search-bar" placeholder="Search.."></input>
-                    <button id="search-submit">Submit</button>
-                    <button id="search-clear">Clear</button>
-                </div>
+                {SearchBar()}
 
                 <select id="dropdown">
                     <option value="volvo">Sort by</option>
