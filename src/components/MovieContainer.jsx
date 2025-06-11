@@ -2,6 +2,8 @@ import { useState } from 'react'
 import "../styles/MovieContainer.css"
 
 export function CreateMovieContainer(apiData) {
+
+
     apiData = {
         "results": [
             {
@@ -104,14 +106,20 @@ export function CreateMovieContainer(apiData) {
             }
         ]
     }
-    const tableOfMovies = apiData.results.map(function(obj){
-        console.log(obj.adult)
+
+    const [movieData, setMovieData] = useState(apiData)
+
+
+
+    const tableOfMovies = movieData.results.map(function(obj){
         return <Movie movieTitle={obj.title} rating={obj.vote_average} key={obj.id} posterImage={obj.poster_path}/>
     })
 
-    return <div className="movie-container">
-        {tableOfMovies}
-    </div>
+    return (
+        <div className="movie-container">
+            {tableOfMovies}
+        </div>
+    )
 }
 
 //{
