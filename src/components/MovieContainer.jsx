@@ -64,6 +64,43 @@ export function CreateMovieContainer(apiData) {
                 "video": false,
                 "vote_average": 6.093,
                 "vote_count": 81
+            },{
+                "adult": false,
+                "backdrop_path": "/is9bmV6uYXu7LjZGJczxrjJDlv8.jpg",
+                "genre_ids": [
+                28,
+                12
+                ],
+                "id": 1229730,
+                "original_language": "fr",
+                "original_title": "Carjackers",
+                "overview": "By day, they're invisible—valets, hostesses, and bartenders at a luxury hotel. By night, they're the Carjackers, a crew of skilled drivers who track and rob wealthy clients on the road. As they plan their ultimate heist, the hotel director hires a ruthless hitman, to stop them at all costs. With danger closing in, can Nora, Zoe, Steve, and Prestance pull off their biggest score yet?",
+                "popularity": 380.9912,
+                "poster_path": "/wbkPMTz2vVai7Ujyp0ag7AM9SrO.jpg",
+                "release_date": "2025-03-27",
+                "title": "Carjackers",
+                "video": false,
+                "vote_average": 6.093,
+                "vote_count": 81
+            },
+            {
+                "adult": false,
+                "backdrop_path": "/is9bmV6uYXu7LjZGJczxrjJDlv8.jpg",
+                "genre_ids": [
+                28,
+                12
+                ],
+                "id": 1229730,
+                "original_language": "fr",
+                "original_title": "Carjackers",
+                "overview": "By day, they're invisible—valets, hostesses, and bartenders at a luxury hotel. By night, they're the Carjackers, a crew of skilled drivers who track and rob wealthy clients on the road. As they plan their ultimate heist, the hotel director hires a ruthless hitman, to stop them at all costs. With danger closing in, can Nora, Zoe, Steve, and Prestance pull off their biggest score yet?",
+                "popularity": 380.9912,
+                "poster_path": "/wbkPMTz2vVai7Ujyp0ag7AM9SrO.jpg",
+                "release_date": "2025-03-27",
+                "title": "Carjackers",
+                "video": false,
+                "vote_average": 6.093,
+                "vote_count": 81
             }
         ]
     }
@@ -93,11 +130,12 @@ function Movie(props) {
     return (
         <div key={props.id} className="movie">
             <img src={`https://image.tmdb.org/t/p/w500${props.posterImage}`} alt={props.movieTitle} />
-            <h3>x Watched</h3>
-            <h3>x Favorite</h3>
+            <div className="interactable-container">
+                <h3>x Watched</h3>
+                <h3>x Favorite</h3>
+            </div>
             <h2>{props.movieTitle}</h2>
-            <h3>{props.rating}</h3>
-
+            {/* <h3>{props.rating}</h3> */}
         </div>
     )
 }
