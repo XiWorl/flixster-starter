@@ -3,6 +3,7 @@ import "../styles/Header.css"
 
 
 async function searchData(apiKey, searchValue) {
+    window.currentPage = 0
     let url = `https://api.themoviedb.org/3/search/collection?query=${searchValue}`;
     if (searchValue == "" || searchValue == " ") {
         url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`

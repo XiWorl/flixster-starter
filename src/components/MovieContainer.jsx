@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/MovieContainer.css";
 
-let defaultMovieData = []
 
 async function fetchData(page, apiKey) {
     const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
@@ -20,6 +19,8 @@ async function fetchData(page, apiKey) {
 }
 
 export function CreateMovieContainer({apiKey, movieData, setMovieData}) {
+
+    const [loadButtonEnabled, setLoadButtonEnabled] = useState(true)
 
     useEffect(function () {
         let result = fetchData(1, apiKey) 
@@ -47,7 +48,14 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData}) {
     });
 
 
-    return <div className="movie-container">{tableOfMovies}</div>;
+    return (
+        <>
+            <div className="movie-container">
+                {tableOfMovies}
+            </div>
+            <LoadButton visible={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey}/>
+        </>
+    )
 }
 
 
@@ -74,10 +82,22 @@ function Movie(props) {
     );
 }
 
-export function Modal() {
-    const [modalVisibility, setModalVisibility] = useState(false);
+function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
+    function onLoadButtonClick() {
+        console.log(window.currentPage += 1)
+        console.log(movieData)
 
-    return div;
+        let result = fetchData(window.currentPage, apiKey) 
+        result.then(function(data) {
+            console.log([...movieData, ...data])
+            setMovieData([...movieData, ...data])
+        })
+    }
+    if (loadButtonEnabled == false) {
+        return 
+    } else {
+        return <button onClick={onLoadButtonClick} id="load-more" className="load-more-button">Load More</button>
+    }
 }
 
 function onMovieClick() {

@@ -4,6 +4,7 @@ import { Header } from './components/Header'
 import './App.css'
 
 let apiKey = import.meta.env.VITE_API_KEY
+window.currentPage = 1
 
 
 const App = () => {
