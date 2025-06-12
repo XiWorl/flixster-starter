@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { enableModal, Modal } from "./Modal";
 import "../styles/MovieContainer.css";
-
 
 async function fetchData(page, apiKey) {
     const url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
@@ -18,7 +18,7 @@ async function fetchData(page, apiKey) {
     return json.results
 }
 
-export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled}) {
+export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData}) {
     useEffect(function () {
         let result = fetchData(1, apiKey) 
         result.then(function(data) {
@@ -26,6 +26,8 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
         })
     }, []);
     
+    
+
     const tableOfMovies = movieData.map(function (obj) {
         let movieTitle = ""
         if (obj.title != null) {
@@ -33,6 +35,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
         } else if (obj.name != null) {
             movieTitle = obj.name
         }
+        
         return (
             <Movie
                 movieTitle={movieTitle}
@@ -40,6 +43,11 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
                 key={obj.id}
                 posterImage={obj.poster_path}
                 movieData={movieData}
+                setModalData={setModalData}
+                backdropImage={obj.backdrop_path}
+                releaseDate={obj.release_date}
+                genres={[...obj.genre_ids]}
+                overview={obj.overview}
             />
         );
     });
@@ -57,13 +65,15 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
 
 function Movie(props) {
     let posterImage = props.posterImage
+
     if (posterImage === null) {
         posterImage = "src/assets/Placeholder Image.png"
     } else {
         posterImage = `https://image.tmdb.org/t/p/w500${props.posterImage}`
     }
+
     return (
-        <div key={props.id} className="movie" onClick={onMovieClick}>
+        <div key={props.id} className="movie" onClick={onMovieClicked(props, props.setModalData)}>
             <img
                 src={posterImage}
                 alt={props.movieTitle}
@@ -76,7 +86,6 @@ function Movie(props) {
                 <input className="favorite" type="image" src="src\assets\star-regular.png" alt="Favorite" />
             </div>
             <h2>{props.movieTitle}</h2>
-            
         </div>
     );
 }
@@ -97,6 +106,16 @@ function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
     }
 }
 
-function onMovieClick() {
-    console.log("click");
+function onMovieClicked(props, setModalData) {
+    return function() {
+        enableModal()
+        setModalData({
+            backdropImage: props.backdropImage,
+            releaseDate: props.releaseDate,
+            genres: props.genres,
+            overview: props.overview,
+            movieTitle: props.movieTitle
+        })
+        console.log(props)
+    }
 }
