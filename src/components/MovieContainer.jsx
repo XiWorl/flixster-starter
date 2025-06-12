@@ -3,7 +3,7 @@ import "../styles/MovieContainer.css";
 
 
 async function fetchData(page, apiKey) {
-    const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
+    const url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
     const options = {
         method: "GET",
         headers: {
@@ -18,10 +18,7 @@ async function fetchData(page, apiKey) {
     return json.results
 }
 
-export function CreateMovieContainer({apiKey, movieData, setMovieData}) {
-
-    const [loadButtonEnabled, setLoadButtonEnabled] = useState(true)
-
+export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled}) {
     useEffect(function () {
         let result = fetchData(1, apiKey) 
         result.then(function(data) {
@@ -47,13 +44,12 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData}) {
         );
     });
 
-
     return (
         <>
             <div className="movie-container">
                 {tableOfMovies}
             </div>
-            <LoadButton visible={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey}/>
+            <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey}/>
         </>
     )
 }
@@ -73,8 +69,11 @@ function Movie(props) {
                 alt={props.movieTitle}
             />
             <div className="interactable-container">
-                <h3>x Watched</h3>
-                <h3>x Favorite</h3>
+                <div className="watched">
+                    <input type="image" src="src/assets/eye-slash.png" alt="Watched" />
+                    <h3>Watched</h3>
+                </div>
+                <input className="favorite" type="image" src="src\assets\star-regular.png" alt="Favorite" />
             </div>
             <h2>{props.movieTitle}</h2>
             
@@ -84,12 +83,10 @@ function Movie(props) {
 
 function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
     function onLoadButtonClick() {
-        console.log(window.currentPage += 1)
-        console.log(movieData)
-
+        
+        window.currentPage +=1
         let result = fetchData(window.currentPage, apiKey) 
         result.then(function(data) {
-            console.log([...movieData, ...data])
             setMovieData([...movieData, ...data])
         })
     }

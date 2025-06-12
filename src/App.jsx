@@ -9,11 +9,13 @@ window.currentPage = 1
 
 const App = () => {
   const [movieData, setMovieData] = useState([]);
+  const [loadButtonEnabled, setLoadButtonEnabled] = useState(true)
+  
   
   return (
     <div className="App">
-      <Header apiKey={apiKey} setMovieData={setMovieData}/>
-      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey}/>
+      <Header apiKey={apiKey} setMovieData={setMovieData} setLoadButtonEnabled={setLoadButtonEnabled} movieData={movieData}/>
+      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled}/>
     </div>
   )
 }
