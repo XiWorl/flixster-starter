@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import "../styles/Header.css"
 
-const filterOptions = {"A-Z": (a,b) => a.title.localeCompare(b.title)}
+const filterOptions = {
+    "A-Z": (a,b) => a.title.localeCompare(b.title),
+    "Rating": (a,b) => b.vote_average - a.vote_average,
+    "Release Date": (a,b) => { new Date(b.release_date).getTime() - new Date(a.release_date).getTime()}
+}
 
 async function searchData(apiKey, searchValue) {
     window.currentPage = 1
@@ -58,9 +62,9 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled) {
 }
 
 
+export function setFilter(movieData, setMovieData) {
+    if (window.currentFilter == "") return 
 
-
-export function Header(props) {
     function deepCopy(array) {
         return array.map((item) => {
             if (Array.isArray(item)) {
@@ -70,16 +74,47 @@ export function Header(props) {
             }
         });
     }
+
+    function getSortedData() {
+        switch (window.currentFilter) {
+            case "A-Z":
+                return deepCopy(movieData).sort(filterOptions["A-Z"])
+            case "Release Date":
+                // return deepCopy(movieData).sort(filterOptions["Release Date"])
+
+                return deepCopy(movieData).sort(function(a,b) {
+                    const movie1Date = new Date(b.release_date).getTime()
+                    const movie2Date = new Date(a.release_date).getTime()
+                    return movie1Date - movie2Date
+                })
+            case "Rating":
+                return deepCopy(movieData).sort(filterOptions["Rating"])
+            default: 
+                return function() {}
+                // return deepCopy(movieData).sort((a,b) => b.vote_average - a.vote_average)
+        }
+    }
+
+    // if (window.currentFilter == )
+    // let copy = deepCopy(props.movieData).sort((a,b) => a.title.localeCompare(b.title))
+    // props.setMovieData(copy)
+    // let nums = ["c","v","a"]
+    // console.log(nums.sort(filterOptions["A-Z"]))
+    // window.currentFilter = "A-Z"
+    // if (filterOptions[window.currentFilter] != null) {
+        let data = getSortedData()
+        
+        console.log(data)
+        setMovieData(data)
+    // }
+}
+
+
+export function Header(props) {
     
     function onDropdownChange(event) {
-        const selectedValue = event.target.value
-        
-        // let sortedData = props.movieData.sort((a,b) => a.title.localeCompare(b.title))
-        // props.setMovieData(sortedData)
-        let copy = deepCopy(props.movieData).sort((a,b) => a.title.localeCompare(b.title))
-        
-        props.setMovieData(copy)
-        console.log(props.movieData)
+        window.currentFilter = event.target.value
+        setFilter(props.movieData, props.setMovieData)
     }
     
     return (

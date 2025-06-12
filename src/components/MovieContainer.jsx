@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { enableModal, Modal } from "./Modal";
+import { setFilter } from "./Header";
 import "../styles/MovieContainer.css";
 
 async function fetchData(page, apiKey) {
@@ -99,11 +100,12 @@ function Movie(props) {
 
 function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
     function onLoadButtonClick() {
-        window.currentPage +=1
+        window.currentPage += 1
 
         let result = fetchData(window.currentPage, apiKey) 
         result.then(function(data) {
             setMovieData([...movieData, ...data])
+            setFilter([...movieData, ...data], setMovieData)
         })
     }
     if (loadButtonEnabled == false) {

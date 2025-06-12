@@ -6,6 +6,7 @@ import './App.css'
 
 let apiKey = import.meta.env.VITE_API_KEY
 window.currentPage = 1
+window.currentFilter = ""
 
 
 const App = () => {
