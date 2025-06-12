@@ -19,6 +19,8 @@ async function fetchData(page, apiKey) {
 }
 
 export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData}) {
+    let displayedMovieIds = []
+
     useEffect(function () {
         let result = fetchData(1, apiKey) 
         result.then(function(data) {
@@ -27,7 +29,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
     }, []);
     
     
-
+    
     const tableOfMovies = movieData.map(function (obj) {
         let movieTitle = ""
         if (obj.title != null) {
@@ -35,6 +37,11 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
         } else if (obj.name != null) {
             movieTitle = obj.name
         }
+
+        if (displayedMovieIds.includes(obj.id)) {
+            return
+        }
+        displayedMovieIds.push(obj.id)
 
         return (
             <Movie
@@ -73,7 +80,7 @@ function Movie(props) {
     }
 
     return (
-        <div key={props.id} className="movie" onClick={onMovieClicked(props, props.setModalData)}>
+        <div key={props.id} className="movie" onClick={onMovieClicked(props, props.setModalData)} >
             <img
                 src={posterImage}
                 alt={props.movieTitle}
@@ -93,7 +100,7 @@ function Movie(props) {
 function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
     function onLoadButtonClick() {
         window.currentPage +=1
-        
+
         let result = fetchData(window.currentPage, apiKey) 
         result.then(function(data) {
             setMovieData([...movieData, ...data])

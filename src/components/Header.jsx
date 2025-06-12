@@ -57,12 +57,29 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled) {
     )
 }
 
+
+
+
 export function Header(props) {
+    function deepCopy(array) {
+        return array.map((item) => {
+            if (Array.isArray(item)) {
+                return deepCopy(item);
+            } else {
+                return item;
+            }
+        });
+    }
+    
     function onDropdownChange(event) {
         const selectedValue = event.target.value
         
-        let sortedData = props.movieData.sort((a,b) => a.title.localeCompare(b.title))
-        props.setMovieData([])
+        // let sortedData = props.movieData.sort((a,b) => a.title.localeCompare(b.title))
+        // props.setMovieData(sortedData)
+        let copy = deepCopy(props.movieData).sort((a,b) => a.title.localeCompare(b.title))
+        
+        props.setMovieData(copy)
+        console.log(props.movieData)
     }
     
     return (
