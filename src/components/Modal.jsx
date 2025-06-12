@@ -12,7 +12,7 @@ function closeModal() {
     modal.style.visibility = "hidden"
 }
 
-export function Modal({modalData, setModalData}) {
+export function Modal({modalData}) {
     let selectedImage = `https://image.tmdb.org/t/p/w500${modalData.backdropImage}`
 
     if (selectedImage == null) {
@@ -33,10 +33,13 @@ export function Modal({modalData, setModalData}) {
     if (genreString.length > 2) {
         genreString = genreString.substring(0, genreString.length-2)
     }
-    
+
+    function test(event) {
+        event.stopPropagation()
+    }
     return (
-        <div id="the-modal" className="modal">
-            <div className="modal-content">
+        <div id="the-modal" className="modal" onClick={closeModal}>
+            <div className="modal-content" onClick={test}>
                 <span className="close" onClick={closeModal}>&times;</span>
                     <div id="modal-top">
                         <h2>{modalData.movieTitle}</h2>

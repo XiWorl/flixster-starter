@@ -35,7 +35,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
         } else if (obj.name != null) {
             movieTitle = obj.name
         }
-        
+
         return (
             <Movie
                 movieTitle={movieTitle}
@@ -92,8 +92,8 @@ function Movie(props) {
 
 function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
     function onLoadButtonClick() {
-        
         window.currentPage +=1
+        
         let result = fetchData(window.currentPage, apiKey) 
         result.then(function(data) {
             setMovieData([...movieData, ...data])
@@ -116,6 +116,5 @@ function onMovieClicked(props, setModalData) {
             overview: props.overview,
             movieTitle: props.movieTitle
         })
-        console.log(props)
     }
 }

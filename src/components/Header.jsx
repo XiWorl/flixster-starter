@@ -64,6 +64,7 @@ export function Header(props) {
         let sortedData = props.movieData.sort((a,b) => a.title.localeCompare(b.title))
         props.setMovieData([])
     }
+    
     return (
         <div id="header-div">
             <div id="title-div">
