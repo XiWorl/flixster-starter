@@ -28,8 +28,7 @@ async function searchData(apiKey, searchValue) {
     return json
 }
 
-function SearchBar(apiKey, setMovieData, setLoadButtonEnabled) {
-    const [input, setInput] = useState("")
+function SearchBar(apiKey, setMovieData, setLoadButtonEnabled, input, setInput) {
 
     function onChange(event) {
         setInput(event.target.value)
@@ -37,6 +36,7 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled) {
 
     function onSearchClick(_event, priorityInput) {
         let selectedInput = priorityInput != null ? priorityInput : input
+        window.searchEnabled = true
 
         searchData(apiKey, selectedInput).then(function(data) {
             setMovieData(data.results)
@@ -51,6 +51,7 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled) {
     function onClearClick() {
         setInput("")
         onSearchClick(apiKey, "")
+        window.searchEnabled = false
     }
     return (
         <div id="searchbar-options">
@@ -101,12 +102,12 @@ export function setFilter(movieData, setMovieData) {
     // let nums = ["c","v","a"]
     // console.log(nums.sort(filterOptions["A-Z"]))
     // window.currentFilter = "A-Z"
-    // if (filterOptions[window.currentFilter] != null) {
+    if (filterOptions[window.currentFilter] != null) {
         let data = getSortedData()
         
         console.log(data)
         setMovieData(data)
-    // }
+    }
 }
 
 
@@ -124,7 +125,7 @@ export function Header(props) {
             </div>
 
             <div id="search-options">
-                {SearchBar(props.apiKey, props.setMovieData, props.setLoadButtonEnabled)}
+                {SearchBar(props.apiKey, props.setMovieData, props.setLoadButtonEnabled, props.input, props.setInput)}
 
                 <select id="dropdown" onChange={onDropdownChange}>
                     <option value="" disabled selected>Sort by</option>

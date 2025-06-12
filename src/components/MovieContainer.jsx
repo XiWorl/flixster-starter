@@ -3,8 +3,11 @@ import { enableModal, Modal } from "./Modal";
 import { setFilter } from "./Header";
 import "../styles/MovieContainer.css";
 
-async function fetchData(page, apiKey) {
-    const url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
+async function fetchData(page, apiKey, input) {
+    let url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
+    if (window.searchEnabled == true) {
+        url = `https://api.themoviedb.org/3/search/movie?query=${input}&page=${page}`
+    }
     const options = {
         method: "GET",
         headers: {
@@ -19,7 +22,7 @@ async function fetchData(page, apiKey) {
     return json.results
 }
 
-export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData}) {
+export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData, input}) {
     let displayedMovieIds = []
 
     useEffect(function () {
@@ -65,7 +68,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
             <div className="movie-container">
                 {tableOfMovies}
             </div>
-            <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey}/>
+            <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey} input={input}/>
         </>
     )
 }
@@ -98,11 +101,11 @@ function Movie(props) {
     );
 }
 
-function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey}) {
+function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey, input}) {
     function onLoadButtonClick() {
         window.currentPage += 1
 
-        let result = fetchData(window.currentPage, apiKey) 
+        let result = fetchData(window.currentPage, apiKey, input) 
         result.then(function(data) {
             setMovieData([...movieData, ...data])
             setFilter([...movieData, ...data], setMovieData)
