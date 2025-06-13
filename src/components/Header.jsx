@@ -92,16 +92,9 @@ export function setFilter(movieData, setMovieData) {
                 return deepCopy(movieData).sort(filterOptions["Rating"])
             default: 
                 return function() {}
-                // return deepCopy(movieData).sort((a,b) => b.vote_average - a.vote_average)
         }
     }
 
-    // if (window.currentFilter == )
-    // let copy = deepCopy(props.movieData).sort((a,b) => a.title.localeCompare(b.title))
-    // props.setMovieData(copy)
-    // let nums = ["c","v","a"]
-    // console.log(nums.sort(filterOptions["A-Z"]))
-    // window.currentFilter = "A-Z"
     if (filterOptions[window.currentFilter] != null) {
         let data = getSortedData()
         

@@ -23,14 +23,23 @@ async function fetchData(page, apiKey, input) {
 }
 
 export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData, input}) {
+    const [favorited, setFavorited] = useState({})
+    const [watched, setWatched] = useState({})
+    const [currentView, setCurrentView] = useState("Home")
     let displayedMovieIds = []
 
     useEffect(function () {
-        let result = fetchData(1, apiKey) 
-        result.then(function(data) {
-            setMovieData(data)
-        })
-    }, []);
+        if (currentView == "Home") {
+            let result = fetchData(1, apiKey) 
+            result.then(function(data) {
+                setMovieData(data)
+            })
+        } else if (currentView == "Favorites") {
+            setMovieData(favorited)
+        } else if (currentView == "Watched") {
+            setMovieData(watched)
+        }
+    }, [currentView]);
     
     
     
@@ -59,6 +68,11 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
                 releaseDate={obj.release_date}
                 genres={[...obj.genre_ids]}
                 overview={obj.overview}
+                id={obj.id}
+                favorited={favorited}
+                watched={watched}
+                setFavorited={setFavorited}
+                setWatched={setWatched}
             />
         );
     });
@@ -83,6 +97,23 @@ function Movie(props) {
         posterImage = `https://image.tmdb.org/t/p/w500${props.posterImage}`
     }
 
+    function onInteractableClick(event) {
+        event.stopPropagation()
+        if (event.target.className == "favorite") {
+            if (props.favorited[props.id] == null) {
+                props.setFavorited({...props.favorited, [props.id]: props})
+                return
+            } else {
+                delete props.favorited[props.id]
+                console.log(props.favorited)
+            }
+            console.log(props.favorited)
+
+        } else {
+            window.watched.push(props)
+        }
+    }
+
     return (
         <div key={props.id} className="movie" onClick={onMovieClicked(props, props.setModalData)} >
             <img
@@ -91,10 +122,10 @@ function Movie(props) {
             />
             <div className="interactable-container">
                 <div className="watched">
-                    <input type="image" src="src/assets/eye-slash.png" alt="Watched" />
+                    <input onClick={onInteractableClick} type="image" src="src/assets/eye-slash.png" alt="Watched" />
                     <h3>Watched</h3>
                 </div>
-                <input className="favorite" type="image" src="src\assets\star-regular.png" alt="Favorite" />
+                <input onClick={onInteractableClick} className="favorite" type="image" src="src\assets\star-regular.png" alt="Favorite" />
             </div>
             <h2>{props.movieTitle}</h2>
         </div>

@@ -15,13 +15,14 @@ const App = () => {
   const [loadButtonEnabled, setLoadButtonEnabled] = useState(true)
   const [modalData, setModalData] = useState({})
   const [input, setInput] = useState("")
+  
 
-  
-  
+
+
   return (
     <div className="App">
-      <Header apiKey={apiKey} setMovieData={setMovieData} setLoadButtonEnabled={setLoadButtonEnabled} movieData={movieData} input={input} setInput={setInput}/>
-      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled} setModalData={setModalData} input={input}/>
+      <Header apiKey={apiKey} setMovieData={setMovieData} setLoadButtonEnabled={setLoadButtonEnabled} movieData={movieData} input={input} setInput={setInput} />
+      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled} setModalData={setModalData} input={input} />
       <Modal modalData={modalData} setModalData={setModalData} />
     </div>
   )
