@@ -161,12 +161,19 @@
     }
 }
 
+@media only screen and (max-width: 999px){
+    .movie h2 {
+        font-size: 1.5vw;
+    }
+}
+
 @media only screen and (max-width: 800px){
     .movie {
         width: 20vw;
         margin-left: 1vw;
         margin-right: 1vw;
     }
+    
 
     .watched input {
         width: 12px;
@@ -191,10 +198,6 @@
         margin-left: 1vw;
         margin-right: 1vw;
     }
-
-    /* .sidebar {
-        width: 10vw;
-    } */
 
     iframe {
         width: 80%;
