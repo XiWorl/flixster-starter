@@ -17,3 +17,15 @@ button:hover {
   background-color: #777;
   color: white;
 }
+
+
+footer {
+    background-color: #1b1a24;
+    position: fixed;
+    bottom: 0px;
+    padding-left: 100vw;
+    padding-top: 1vh;
+    padding-right: 100px;
+    margin-left: 0vw;
+    border-top: 2px solid black;;
+}

@@ -25,6 +25,7 @@ const App = () => {
       <Header apiKey={apiKey} setMovieData={setMovieData} setLoadButtonEnabled={setLoadButtonEnabled} movieData={movieData} input={input} setInput={setInput} />
       <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled} setModalData={setModalData} input={input} setInput={setInput} />
       <Modal modalData={modalData} apiKey={apiKey}/>
+      <footer/>
     </div>
   )
 }
