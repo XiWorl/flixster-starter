@@ -31,6 +31,11 @@ async function searchData(apiKey, searchValue) {
 
 function SearchBar(apiKey, setMovieData, setLoadButtonEnabled, input, setInput) {
 
+    function onKeyDown(event) {
+        if (event.key == "Enter") {
+            onSearchClick()
+        }
+    }
     function onChange(event) {
         setInput(event.target.value)
     }
@@ -56,7 +61,7 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled, input, setInput) 
     }
     return (
         <div id="searchbar-options">
-            <input type="text" id="search-bar" onChange={onChange} placeholder="Search.." value={input}></input>
+            <input type="text" id="search-bar" onChange={onChange} placeholder="Search.." value={input} onKeyDown={onKeyDown}></input>
             <button onClick={onSearchClick} id="search-submit">Submit</button>
             <button onClick={onClearClick}id="search-clear">Clear</button>
         </div>

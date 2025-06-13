@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 async function fetchData(apiKey, movieId) {
-    // let url = `https://api.themoviedb.org/3/movie/${movieId}/videos?${apiKey}`
-    let url = `https://api.themoviedb.org/3/movie/1426776/videos?language=en-US`
+    let url = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`
     const options = {
         method: "GET",
         headers: {
@@ -31,6 +30,8 @@ function closeModal() {
 }
 
 function Trailer({apiKey, movieId, setTrailerVideo}) {
+    if (movieId == null) return <iframe/>
+
     fetchData(apiKey, movieId).then(function(data) {
         data.filter(function(obj) {
             if (obj.type == "Trailer") return true
@@ -44,6 +45,7 @@ function Trailer({apiKey, movieId, setTrailerVideo}) {
         }
         return <iframe src="#" ></iframe>
     })
+    fetchData()
     return <iframe src="#" />
 }
 
@@ -89,7 +91,7 @@ export function Modal({modalData, apiKey}) {
                         <p id="overview"><b>Overview: </b>{modalData.overview}</p>
                     </div>
                     <div id="modal-bottom">
-                        <Trailer apiKey={apiKey} movieId={modalData.id} setTrailerVideo={setTrailerVideo}/>
+                        <Trailer apiKey={apiKey} movieId={modalData.movieId} setTrailerVideo={setTrailerVideo}/>
                     </div>
                 </div>
         </div>
