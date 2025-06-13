@@ -32,7 +32,7 @@ function closeModal() {
 function Trailer({apiKey, movieId, setTrailerVideo}) {
     if (movieId == null) return <iframe/>
 
-    fetchTrailerData(apiKey, movieId).then(function(data) {
+    fetchData(apiKey, movieId).then(function(data) {
         data.filter(function(obj) {
             if (obj.type == "Trailer") return true
             return false
@@ -45,7 +45,6 @@ function Trailer({apiKey, movieId, setTrailerVideo}) {
         }
         return <iframe src="#" ></iframe>
     })
-    fetchTrailerData()
     return <iframe src="#" />
 }
 
