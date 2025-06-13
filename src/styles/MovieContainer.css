@@ -1,4 +1,18 @@
 
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 10vw;
+    background-color: black;
+}
+
+.links-holder {
+    display: flex;
+    flex-direction: column;
+}
 
 .movie-container {
     display: flex;

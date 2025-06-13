@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CreateMovieContainer } from './components/MovieContainer'
 import { Header } from './components/Header'
 import { Modal } from './components/Modal'
+import { Sidebar } from './components/Sidebar'
 import './App.css'
 
 let apiKey = import.meta.env.VITE_API_KEY
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <div className="App">
       <Header apiKey={apiKey} setMovieData={setMovieData} setLoadButtonEnabled={setLoadButtonEnabled} movieData={movieData} input={input} setInput={setInput} />
-      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled} setModalData={setModalData} input={input} />
+      <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled} setModalData={setModalData} input={input} setInput={setInput} />
       <Modal modalData={modalData} apiKey={apiKey}/>
     </div>
   )

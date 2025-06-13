@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { enableModal, Modal } from "./Modal";
 import { setFilter } from "./Header";
 import "../styles/MovieContainer.css";
+import { Sidebar } from "./Sidebar";
 
 async function fetchData(page, apiKey, input) {
     let url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
@@ -22,9 +23,9 @@ async function fetchData(page, apiKey, input) {
     return json.results
 }
 
-export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData, input}) {
-    const [favorited, setFavorited] = useState({})
-    const [watched, setWatched] = useState({})
+export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData, input, setInput}) {
+    const [favorited, setFavorited] = useState([])
+    const [watched, setWatched] = useState([])
     const [currentView, setCurrentView] = useState("Home")
     let displayedMovieIds = []
 
@@ -35,12 +36,13 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
                 setMovieData(data)
             })
         } else if (currentView == "Favorites") {
+            setInput("")
             setMovieData(favorited)
         } else if (currentView == "Watched") {
+            setInput("")
             setMovieData(watched)
         }
     }, [currentView]);
-    
     
     
     const tableOfMovies = movieData.map(function (obj) {
@@ -49,6 +51,8 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
             movieTitle = obj.title
         } else if (obj.name != null) {
             movieTitle = obj.name
+        } else if (obj.movieTitle != null) {
+            movieTitle = obj.movieTitle
         }
 
         if (displayedMovieIds.includes(obj.id)) {
@@ -61,12 +65,12 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
                 movieTitle={movieTitle}
                 rating={obj.vote_average}
                 key={obj.id}
-                posterImage={obj.poster_path}
+                poster_path={obj.poster_path}
                 movieData={movieData}
                 setModalData={setModalData}
-                backdropImage={obj.backdrop_path}
-                releaseDate={obj.release_date}
-                genres={[...obj.genre_ids]}
+                backdrop_path={obj.backdrop_path}
+                release_date={obj.release_date}
+                genre_ids={[...obj.genre_ids]}
                 overview={obj.overview}
                 id={obj.id}
                 favorited={favorited}
@@ -78,39 +82,53 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
     });
 
     return (
-        <>
-            <div className="movie-container">
-                {tableOfMovies}
+        <div className="container">
+            <div className="sidebar">
+                <Sidebar setCurrentView={setCurrentView}/>
             </div>
-            <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey} input={input}/>
-        </>
+            
+            <div className="content">
+                <div className="movie-container">
+                    {tableOfMovies}
+                </div>
+                <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey} input={input} currentView={currentView}/>
+            </div>
+        </div>
     )
 }
 
 
 function Movie(props) {
-    let posterImage = props.posterImage
+    let posterImage = props.poster_path
 
-    if (posterImage === null) {
+    if (posterImage == null) {
         posterImage = "src/assets/Placeholder Image.png"
     } else {
-        posterImage = `https://image.tmdb.org/t/p/w500${props.posterImage}`
+        posterImage = `https://image.tmdb.org/t/p/w500${props.poster_path}`
     }
 
     function onInteractableClick(event) {
         event.stopPropagation()
         if (event.target.className == "favorite") {
-            if (props.favorited[props.id] == null) {
-                props.setFavorited({...props.favorited, [props.id]: props})
-                return
-            } else {
-                delete props.favorited[props.id]
-                console.log(props.favorited)
+
+            let isFavoriteFound = false
+            for (let i = 0; i < props.favorited.length; i++) {
+                if (props.favorited[i] != null && props.favorited[i].id == props.id) {
+
+                    let copy = [...props.favorited]
+                    copy.splice(i, 1)
+                    props.setFavorited(copy)
+                    isFavoriteFound = true
+                }
             }
-            console.log(props.favorited)
+            if (isFavoriteFound == true) return
+
+            let copy = [...props.favorited]
+            copy.push(props)
+            props.setFavorited(copy)
 
         } else {
-            // window.watched.push(props)
+            
         }
     }
 
@@ -132,7 +150,7 @@ function Movie(props) {
     );
 }
 
-function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey, input}) {
+function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey, input, currentView}) {
     function onLoadButtonClick() {
         window.currentPage += 1
 
@@ -142,7 +160,7 @@ function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey, input})
             setFilter([...movieData, ...data], setMovieData)
         })
     }
-    if (loadButtonEnabled == false) {
+    if (loadButtonEnabled == false || currentView != "Home") {
         return 
     } else {
         return <button onClick={onLoadButtonClick} id="load-more" className="load-more-button">Load More</button>
@@ -153,9 +171,9 @@ function onMovieClicked(props, setModalData) {
     return function() {
         enableModal()
         setModalData({
-            backdropImage: props.backdropImage,
-            releaseDate: props.releaseDate,
-            genres: props.genres,
+            backdrop_path: props.backdrop_path,
+            release_date: props.release_date,
+            genre_ids: props.genre_ids,
             overview: props.overview,
             movieTitle: props.movieTitle,
             movieId: props.id

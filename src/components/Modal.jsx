@@ -39,15 +39,15 @@ function Trailer({apiKey, movieId}) {
 }
 
 export function Modal({modalData, apiKey}) {
-    let selectedImage = `https://image.tmdb.org/t/p/w500${modalData.backdropImage}`
+    let selectedImage = `https://image.tmdb.org/t/p/w500${modalData.backdrop_path}`
 
     if (selectedImage == null) {
         selectedImage = "src/assets/Placeholder Image.png"
     } 
 
     let genreString = ""
-    if (modalData.genres != null) {
-        for (let genreId of modalData.genres) {
+    if (modalData.genre_ids != null) {
+        for (let genreId of modalData.genre_ids) {
             for (let i = 0; i < genre_ids.genres.length; i++) {
                 if (genre_ids.genres[i].id == genreId) {
                     genreString += `${genre_ids.genres[i].name}, `
@@ -70,7 +70,7 @@ export function Modal({modalData, apiKey}) {
                     <div id="modal-top">
                         <h2>{modalData.movieTitle}</h2>
                         <img id="modal-img" src={selectedImage} alt={modalData.movieTitle} />
-                        <p id="release-date"><b>Release Date: </b>{modalData.releaseDate}</p>
+                        <p id="release-date"><b>Release Date: </b>{modalData.release_date}</p>
                         <p id="genres"><b>Genres: </b>{genreString}</p>
                         <p id="overview"><b>Overview: </b>{modalData.overview}</p>
                     </div>

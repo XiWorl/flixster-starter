@@ -2,10 +2,12 @@
 #mySidebar {
     display: none;
     width: 10%;
+    z-index: 1;
 }
 
-/* 
+
 .w3-teal {
     display: block;
     width: 30%;
-} */
+    z-index: 1;
+}
