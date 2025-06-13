@@ -103,7 +103,7 @@ function Movie(props) {
     let favoriteImage = "src/assets/star-regular.png"
 
     if (posterImage == null) {
-        posterImage = "src/assets/Placeholder Image.png"
+        posterImage = "Placeholder Image.png"
     } else {
         posterImage = `https://image.tmdb.org/t/p/w500${props.poster_path}`
     }
@@ -162,9 +162,9 @@ function Movie(props) {
             />
             <div className="interactable-container">
                 <div className="watched">
-                    <input onClick={onInteractableClick} type="image" src={setIcon(props.watched, "public/eye-slash.png", "eye-solid.png")} alt="Watched" />
+                    <input onClick={onInteractableClick} type="image" src={setIcon(props.watched, "eye-slash.png", "eye-solid.png")} alt="Watched" />
                 </div>
-                <input onClick={onInteractableClick} className="favorite" type="image" src={setIcon(props.favorited, "src/assets/star-regular.png", "src/assets/star-solid.png")} alt="Favorite" />
+                <input onClick={onInteractableClick} className="favorite" type="image" src={setIcon(props.favorited, "star-regular.png", "star-solid.png")} alt="Favorite" />
             </div>
             <h2>{props.movieTitle}</h2>
             <h3>Rating: {props.vote_average}</h3>

@@ -58,7 +58,7 @@ export function Modal({modalData, apiKey}) {
     }, [trailerVideo]);
 
     if (selectedImage == null) {
-        selectedImage = "src/assets/Placeholder Image.png"
+        selectedImage = "Placeholder Image.png"
     } 
 
     let genreString = ""
