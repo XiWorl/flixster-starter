@@ -12,9 +12,9 @@ function onClick(setCurrentView, value) {
 export function Sidebar({setCurrentView}) {
     return (
         <>
-            <button onClick={onClick(setCurrentView, "Home")}>Home</button>
-            <button onClick={onClick(setCurrentView, "Favorites")}>Favorites</button>
-            <button onClick={onClick(setCurrentView, "Watched")}>Watched</button>
+            <button className="sidebar-button" onClick={onClick(setCurrentView, "Home")}>Home</button>
+            <button className="sidebar-button" onClick={onClick(setCurrentView, "Favorites")}>Favorites</button>
+            <button className="sidebar-button" onClick={onClick(setCurrentView, "Watched")}>Watched</button>
         </>
 
 

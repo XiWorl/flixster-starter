@@ -63,7 +63,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
         return (
             <Movie
                 movieTitle={movieTitle}
-                rating={obj.vote_average}
+                vote_average={obj.vote_average}
                 key={obj.id}
                 poster_path={obj.poster_path}
                 movieData={movieData}
@@ -100,6 +100,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
 
 function Movie(props) {
     let posterImage = props.poster_path
+    let favoriteImage = "src/assets/star-regular.png"
 
     if (posterImage == null) {
         posterImage = "src/assets/Placeholder Image.png"
@@ -121,7 +122,10 @@ function Movie(props) {
                     isFavoriteFound = true
                 }
             }
-            if (isFavoriteFound == true) return
+            if (isFavoriteFound == true) {
+                favoriteImage = "src/assets/star-solid.png"
+                return
+            }
 
             let copy = [...props.favorited]
             copy.push(props)
@@ -130,6 +134,16 @@ function Movie(props) {
         } else {
             
         }
+    }
+
+    function setIcon() {
+        let isFavoriteFound = false
+        for (let i = 0; i < props.favorited.length; i++) {
+            if (props.favorited[i] != null && props.favorited[i].id == props.id) {
+                return"src/assets/star-solid.png"
+            }
+        }
+        return "src/assets/star-regular.png"
     }
 
     return (
@@ -141,11 +155,11 @@ function Movie(props) {
             <div className="interactable-container">
                 <div className="watched">
                     <input onClick={onInteractableClick} type="image" src="src/assets/eye-slash.png" alt="Watched" />
-                    <h3>Watched</h3>
                 </div>
-                <input onClick={onInteractableClick} className="favorite" type="image" src="src\assets\star-regular.png" alt="Favorite" />
+                <input onClick={onInteractableClick} className="favorite" type="image" src={setIcon()} alt="Favorite" />
             </div>
             <h2>{props.movieTitle}</h2>
+            <h3>Rating: {props.vote_average}</h3>
         </div>
     );
 }

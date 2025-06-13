@@ -5,13 +5,18 @@
 }
 
 .sidebar {
-    width: 10vw;
-    background-color: black;
+    width: 12vw;
+    background-color: #282c34;
 }
 
 .links-holder {
     display: flex;
     flex-direction: column;
+}
+
+.content {
+    /* margin-right: a; */
+    width: 100%;
 }
 
 .movie-container {
@@ -20,7 +25,22 @@
     flex-wrap: wrap;
     margin-top: 1vh;
     row-gap: 1vh;
+    /* width: 80vw; */
+
+    /* display: grid;
+    grid-template-columns: repeat(3, 15vw);
+    grid-template-rows: repeat(5, 300px);
+    margin-top: 10px;
+
+    row-gap: 5vh;
+    column-gap: 10vw;
+    width: 80vw;
+
+    transition: all 0.25s ease-in-out;
+    justify-content: center; */
 }
+
+
 
 
 .movie {
@@ -30,6 +50,7 @@
     margin-left: 1vw;
     margin-right: 1vw;
     box-shadow: 0px 0px 5px black;
+    padding-bottom: 10px;
 }
 
 
@@ -45,7 +66,14 @@
 .movie h2 {
     width: 100%;
     font-size: 2vw;
-    margin-top: 5%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.movie h3 {
+    width: 100%;
+    font-size: 1.5vw;
+    /* margin-top: 5%; */
     margin-bottom: 0px;
 }
 
@@ -53,7 +81,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0px;
-    height: 10%;
+    /* height: 10%; */
 }
 
 .watched {
@@ -63,13 +91,7 @@
     align-content: center;
 }
 
-.watched h3 {
-    background-color: red;
-    /* font-size: 1.5vw; */
-    font-size: 1vw;
-    align-content: center;
-    margin: 0px;
-}
+
 
 .watched input {
     margin: 0px;
@@ -96,4 +118,82 @@
     padding: 10px;
     border-radius: 10px;
     border: 1px black solid;
+}
+
+
+
+@media only screen and (min-width: 1080px){
+    .movie-container {
+        row-gap: 1vw;
+        column-gap: 2vw;
+    }
+    .movie {
+        width: 10vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+
+    .movie h3 {
+        font-size: 0.7vw;
+
+    }
+    .movie h2 {
+        font-size: 1vw;
+    }
+
+    .sidebar {
+        width: 10vw;
+    }
+
+    .watched input {
+        width: 15px;
+        height: 15px;
+    }
+
+    .favorite {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .movie {
+        width: 20vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+
+    .watched input {
+        width: 12px;
+        height: 12px;
+        margin-bottom: 5px;
+    }
+
+    .favorite {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .movie {
+        width: 22vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+
+    /* .sidebar {
+        width: 10vw;
+    } */
+
+    .watched input {
+        width: 12px;
+        height: 12px;
+        margin-bottom: 5px;
+    }
+
+    .favorite {
+        width: 12px;
+        height: 12px;
+    }
 }
