@@ -162,7 +162,7 @@ function Movie(props) {
             />
             <div className="interactable-container">
                 <div className="watched">
-                    <input onClick={onInteractableClick} type="image" src={setIcon(props.watched, "src/assets/eye-slash.png", "src/assets/eye-solid.png")} alt="Watched" />
+                    <input onClick={onInteractableClick} type="image" src={setIcon(props.watched, "public/eye-slash.png", "eye-solid.png")} alt="Watched" />
                 </div>
                 <input onClick={onInteractableClick} className="favorite" type="image" src={setIcon(props.favorited, "src/assets/star-regular.png", "src/assets/star-solid.png")} alt="Favorite" />
             </div>

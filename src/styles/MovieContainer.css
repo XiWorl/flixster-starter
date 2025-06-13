@@ -6,7 +6,6 @@
 
 .sidebar {
     width: 12vw;
-    background-color: #282c34;
 }
 
 .links-holder {
@@ -15,7 +14,6 @@
 }
 
 .content {
-    /* margin-right: a; */
     width: 100%;
 }
 
@@ -25,19 +23,7 @@
     flex-wrap: wrap;
     margin-top: 1vh;
     row-gap: 1vh;
-    /* width: 80vw; */
-
-    /* display: grid;
-    grid-template-columns: repeat(3, 15vw);
-    grid-template-rows: repeat(5, 300px);
-    margin-top: 10px;
-
-    row-gap: 5vh;
-    column-gap: 10vw;
-    width: 80vw;
-
-    transition: all 0.25s ease-in-out;
-    justify-content: center; */
+    
 }
 
 
@@ -75,7 +61,6 @@
 .movie h3 {
     width: 100%;
     font-size: 1.5vw;
-    /* margin-top: 5%; */
     margin-bottom: 0px;
 }
 
@@ -83,7 +68,6 @@
     display: flex;
     justify-content: space-between;
     margin: 0px;
-    /* height: 10%; */
 }
 
 .watched {
