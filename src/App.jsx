@@ -23,7 +23,7 @@ const App = () => {
     <div className="App">
       <Header apiKey={apiKey} setMovieData={setMovieData} setLoadButtonEnabled={setLoadButtonEnabled} movieData={movieData} input={input} setInput={setInput} />
       <CreateMovieContainer movieData={movieData} setMovieData={setMovieData} apiKey={apiKey} loadButtonEnabled={loadButtonEnabled} setModalData={setModalData} input={input} />
-      <Modal modalData={modalData} setModalData={setModalData} />
+      <Modal modalData={modalData} apiKey={apiKey}/>
     </div>
   )
 }

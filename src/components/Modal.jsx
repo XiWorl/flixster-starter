@@ -1,6 +1,22 @@
 import "../styles/Modal.css"
 import genre_ids from "../data/genre-data"
 
+async function fetchData(apiKey, movieId) {
+    // let url = `https://api.themoviedb.org/3/movie/${movieId}/videos?${apiKey}`
+    let url = `https://api.themoviedb.org/3/movie/1426776/videos?language=en-US`
+    const options = {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+            Authorization:
+                `Bearer ${apiKey}`,
+        },
+    };
+
+    let response = await fetch(url, options)
+    let json = await response.json()
+    return json.results
+}
 
 export function enableModal() {
     let modal = document.getElementById("the-modal")
@@ -12,7 +28,17 @@ function closeModal() {
     modal.style.visibility = "hidden"
 }
 
-export function Modal({modalData}) {
+function Trailer({apiKey, movieId}) {
+    fetchData(apiKey, movieId).then(function(data) {
+        data.filter(function(obj) {
+            if (obj.type == "Trailer") return true
+            return false
+        })
+        return <iframe src="#" frameborder="0"></iframe>
+    })
+}
+
+export function Modal({modalData, apiKey}) {
     let selectedImage = `https://image.tmdb.org/t/p/w500${modalData.backdropImage}`
 
     if (selectedImage == null) {
@@ -49,7 +75,7 @@ export function Modal({modalData}) {
                         <p id="overview"><b>Overview: </b>{modalData.overview}</p>
                     </div>
                     <div id="modal-bottom">
-                        
+                        <Trailer apiKey={apiKey} movieId={modalData.id}/>
                     </div>
                 </div>
         </div>

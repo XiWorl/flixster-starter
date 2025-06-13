@@ -110,7 +110,7 @@ function Movie(props) {
             console.log(props.favorited)
 
         } else {
-            window.watched.push(props)
+            // window.watched.push(props)
         }
     }
 
@@ -157,7 +157,8 @@ function onMovieClicked(props, setModalData) {
             releaseDate: props.releaseDate,
             genres: props.genres,
             overview: props.overview,
-            movieTitle: props.movieTitle
+            movieTitle: props.movieTitle,
+            movieId: props.id
         })
     }
 }
