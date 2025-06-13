@@ -109,6 +109,19 @@ function Movie(props) {
     }
 
     function onInteractableClick(event) {
+        function propLoop(array, state) {
+            for (let i = 0; i < array.length; i++) {
+                if (array[i] != null && array[i].id == props.id) {
+
+                    let copy = [...array]
+                    copy.splice(i, 1)
+                    state(copy)
+                    return true
+                }
+            }
+            return false
+        } 
+
         event.stopPropagation()
         if (event.target.className == "favorite") {
 
@@ -133,6 +146,28 @@ function Movie(props) {
 
         } else {
             
+            // let isWatchedFound = false
+            // for (let i = 0; i < props.watched.length; i++) {
+            //     if (props.watched[i] != null && props.watched[i].id == props.id) {
+
+            //         let copy = [...props.watched]
+            //         copy.splice(i, 1)
+            //         props.setWatched(copy)
+            //         isWatchedFound = true
+            //     }
+            // }
+            // if (isWatchedFound == true) {
+            //     return
+            // }
+
+            if (propLoop(props.watched, props.setWatched) == true) {
+                return
+            }
+
+            let copy = [...props.watched]
+            copy.push(props)
+            props.setWatched(copy)
+
         }
     }
 

@@ -52,9 +52,7 @@ export function Modal({modalData, apiKey}) {
     const [trailerVideo, setTrailerVideo] = useState()
 
     useEffect(function () {
-        console.log(document.querySelector("iframe").src)
         document.querySelector("iframe").src = trailerVideo
-        // document.querySelector("iframe").src="https://www.google.com"
     }, [trailerVideo]);
 
     if (selectedImage == null) {
