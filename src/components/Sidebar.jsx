@@ -2,9 +2,7 @@ import "../styles/Sidebar.css"
 
 
 function onClick(setCurrentView, value) {
-
     return function() {
-        console.log(value)
         setCurrentView(value)
     }
 }

@@ -98,8 +98,6 @@ export function setFilter(movieData, setMovieData) {
 
     if (filterOptions[window.currentFilter] != null) {
         let data = getSortedData()
-        
-        console.log(data)
         setMovieData(data)
     }
 }

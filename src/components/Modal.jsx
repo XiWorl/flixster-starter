@@ -1,5 +1,7 @@
 import "../styles/Modal.css"
 import genre_ids from "../data/genre-data"
+import { useState } from "react";
+import { useEffect } from "react";
 
 async function fetchData(apiKey, movieId) {
     // let url = `https://api.themoviedb.org/3/movie/${movieId}/videos?${apiKey}`
@@ -28,18 +30,32 @@ function closeModal() {
     modal.style.visibility = "hidden"
 }
 
-function Trailer({apiKey, movieId}) {
+function Trailer({apiKey, movieId, setTrailerVideo}) {
     fetchData(apiKey, movieId).then(function(data) {
         data.filter(function(obj) {
             if (obj.type == "Trailer") return true
             return false
         })
-        return <iframe src="#" frameborder="0"></iframe>
+
+        if (data[0] != null && data[0].key != null) {
+            setTrailerVideo(`https://www.youtube.com/embed/${data[0].key}`)
+            return <iframe src={`https://www.youtube.com/embed/${data[0].key}`} ></iframe>
+
+        }
+        return <iframe src="#" ></iframe>
     })
+    return <iframe src="#" />
 }
 
 export function Modal({modalData, apiKey}) {
     let selectedImage = `https://image.tmdb.org/t/p/w500${modalData.backdrop_path}`
+    const [trailerVideo, setTrailerVideo] = useState()
+
+    useEffect(function () {
+        console.log(document.querySelector("iframe").src)
+        document.querySelector("iframe").src = trailerVideo
+        // document.querySelector("iframe").src="https://www.google.com"
+    }, [trailerVideo]);
 
     if (selectedImage == null) {
         selectedImage = "src/assets/Placeholder Image.png"
@@ -75,7 +91,7 @@ export function Modal({modalData, apiKey}) {
                         <p id="overview"><b>Overview: </b>{modalData.overview}</p>
                     </div>
                     <div id="modal-bottom">
-                        <Trailer apiKey={apiKey} movieId={modalData.id}/>
+                        <Trailer apiKey={apiKey} movieId={modalData.id} setTrailerVideo={setTrailerVideo}/>
                     </div>
                 </div>
         </div>
