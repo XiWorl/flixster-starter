@@ -109,7 +109,7 @@ function Movie(props) {
     }
 
     function onInteractableClick(event) {
-        
+
         function propLoop(array, state) {
             for (let i = 0; i < array.length; i++) {
                 if (array[i] != null && array[i].id == props.id) {
@@ -145,14 +145,13 @@ function Movie(props) {
         }
     }
 
-    function setIcon() {
-        let isFavoriteFound = false
-        for (let i = 0; i < props.favorited.length; i++) {
-            if (props.favorited[i] != null && props.favorited[i].id == props.id) {
-                return"src/assets/star-solid.png"
+    function setIcon(array, defaultImage, selectedImage) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i].id == props.id) {
+                return selectedImage
             }
         }
-        return "src/assets/star-regular.png"
+        return defaultImage
     }
 
     return (
@@ -163,9 +162,9 @@ function Movie(props) {
             />
             <div className="interactable-container">
                 <div className="watched">
-                    <input onClick={onInteractableClick} type="image" src="src/assets/eye-slash.png" alt="Watched" />
+                    <input onClick={onInteractableClick} type="image" src={setIcon(props.watched, "src/assets/eye-slash.png", "src/assets/eye-solid.png")} alt="Watched" />
                 </div>
-                <input onClick={onInteractableClick} className="favorite" type="image" src={setIcon()} alt="Favorite" />
+                <input onClick={onInteractableClick} className="favorite" type="image" src={setIcon(props.favorited, "src/assets/star-regular.png", "src/assets/star-solid.png")} alt="Favorite" />
             </div>
             <h2>{props.movieTitle}</h2>
             <h3>Rating: {props.vote_average}</h3>
