@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import "../styles/Header.css"
+import { Sidebar } from './Sidebar'
 
 const filterOptions = {
     "A-Z": (a,b) => a.title.localeCompare(b.title),
