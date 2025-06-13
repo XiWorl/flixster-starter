@@ -6,6 +6,10 @@
     padding: 1vh;
 }
 
+#header-div  h1 {
+  color: white;
+}
+
 #search-options {
     display: flex;
     flex-direction: row;
