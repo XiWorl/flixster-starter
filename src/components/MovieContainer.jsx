@@ -4,7 +4,7 @@ import { setFilter } from "./Header";
 import "../styles/MovieContainer.css";
 import { Sidebar } from "./Sidebar";
 
-async function fetchData(page, apiKey, input) {
+async function fetchData(page, apiKey, input, runTime, movieId) {
     let url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
     if (window.searchEnabled == true) {
         url = `https://api.themoviedb.org/3/search/movie?query=${input}&page=${page}`
@@ -17,6 +17,13 @@ async function fetchData(page, apiKey, input) {
                 `Bearer ${apiKey}`,
         },
     };
+
+    if (runTime === true) {
+        url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`
+        let response = await fetch(url, options)
+        let json = await response.json()
+        return json.runtime
+    }
 
     let response = await fetch(url, options)
     let json = await response.json()
@@ -77,6 +84,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
                 watched={watched}
                 setFavorited={setFavorited}
                 setWatched={setWatched}
+                apiKey={apiKey}
             />
         );
     });
@@ -155,7 +163,7 @@ function Movie(props) {
     }
 
     return (
-        <div key={props.id} className="movie" onClick={onMovieClicked(props, props.setModalData)} >
+        <div key={props.id} className="movie" onClick={onMovieClicked(props, props.setModalData, props.apiKey)} >
             <img
                 src={posterImage}
                 alt={props.movieTitle}
@@ -189,16 +197,19 @@ function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey, input, 
     }
 }
 
-function onMovieClicked(props, setModalData) {
+function onMovieClicked(props, setModalData, apiKey) {
     return function() {
         enableModal()
-        setModalData({
-            backdrop_path: props.backdrop_path,
-            release_date: props.release_date,
-            genre_ids: props.genre_ids,
-            overview: props.overview,
-            movieTitle: props.movieTitle,
-            movieId: props.id
+        fetchData(1, apiKey, null, true, props.id).then(function(runTime) {
+            setModalData({
+                backdrop_path: props.backdrop_path,
+                release_date: props.release_date,
+                genre_ids: props.genre_ids,
+                overview: props.overview,
+                movieTitle: props.movieTitle,
+                movieId: props.id,
+                runtime: runTime
+            })
         })
     }
 }

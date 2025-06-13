@@ -88,6 +88,7 @@ export function Modal({modalData, apiKey}) {
                         <p id="release-date"><b>Release Date: </b>{modalData.release_date}</p>
                         <p id="genres"><b>Genres: </b>{genreString}</p>
                         <p id="overview"><b>Overview: </b>{modalData.overview}</p>
+                        <p id="overview"><b>RunTime: </b>{modalData.runtime}m</p>
                     </div>
                     <div id="modal-bottom">
                         <Trailer apiKey={apiKey} movieId={modalData.movieId} setTrailerVideo={setTrailerVideo}/>
