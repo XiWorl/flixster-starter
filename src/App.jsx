@@ -16,8 +16,6 @@ const App = () => {
   const [loadButtonEnabled, setLoadButtonEnabled] = useState(true)
   const [modalData, setModalData] = useState({})
   const [input, setInput] = useState("")
-  
-
 
 
   return (

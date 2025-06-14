@@ -5,7 +5,7 @@ import "../styles/MovieContainer.css";
 import { Sidebar } from "./Sidebar";
 
 async function fetchData(page, apiKey, input, runTime, movieId) {
-    let url =  `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
+    let url = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`
     if (window.searchEnabled == true) {
         url = `https://api.themoviedb.org/3/search/movie?query=${input}&page=${page}`
     }
@@ -30,7 +30,7 @@ async function fetchData(page, apiKey, input, runTime, movieId) {
     return json.results
 }
 
-export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButtonEnabled, setModalData, input, setInput}) {
+export function CreateMovieContainer({ apiKey, movieData, setMovieData, loadButtonEnabled, setModalData, input, setInput }) {
     const [favorited, setFavorited] = useState([])
     const [watched, setWatched] = useState([])
     const [currentView, setCurrentView] = useState("Home")
@@ -38,8 +38,8 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
 
     useEffect(function () {
         if (currentView == "Home") {
-            let result = fetchData(1, apiKey) 
-            result.then(function(data) {
+            let result = fetchData(1, apiKey)
+            result.then(function (data) {
                 setMovieData(data)
             })
         } else if (currentView == "Favorites") {
@@ -50,8 +50,7 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
             setMovieData(watched)
         }
     }, [currentView]);
-    
-    
+
     const tableOfMovies = movieData.map(function (obj) {
         let movieTitle = ""
         if (obj.title != null) {
@@ -92,14 +91,14 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
     return (
         <div className="container">
             <div className="sidebar">
-                <Sidebar setCurrentView={setCurrentView}/>
+                <Sidebar setCurrentView={setCurrentView} />
             </div>
-            
+
             <div className="content">
                 <div className="movie-container">
                     {tableOfMovies}
                 </div>
-                <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey} input={input} currentView={currentView}/>
+                <LoadButton loadButtonEnabled={loadButtonEnabled} setMovieData={setMovieData} movieData={movieData} apiKey={apiKey} input={input} currentView={currentView} />
             </div>
         </div>
     )
@@ -108,7 +107,6 @@ export function CreateMovieContainer({apiKey, movieData, setMovieData, loadButto
 
 function Movie(props) {
     let posterImage = props.poster_path
-    let favoriteImage = "src/assets/star-regular.png"
 
     if (posterImage == null) {
         posterImage = "Placeholder Image.png"
@@ -129,7 +127,7 @@ function Movie(props) {
                 }
             }
             return false
-        } 
+        }
 
         event.stopPropagation()
 
@@ -180,27 +178,27 @@ function Movie(props) {
     );
 }
 
-function LoadButton({loadButtonEnabled, setMovieData, movieData, apiKey, input, currentView}) {
+function LoadButton({ loadButtonEnabled, setMovieData, movieData, apiKey, input, currentView }) {
     function onLoadButtonClick() {
         window.currentPage += 1
 
-        let result = fetchData(window.currentPage, apiKey, input) 
-        result.then(function(data) {
+        let result = fetchData(window.currentPage, apiKey, input)
+        result.then(function (data) {
             setMovieData([...movieData, ...data])
             setFilter([...movieData, ...data], setMovieData)
         })
     }
     if (loadButtonEnabled == false || currentView != "Home") {
-        return 
+        return
     } else {
         return <button onClick={onLoadButtonClick} id="load-more" className="load-more-button">Load More</button>
     }
 }
 
 function onMovieClicked(props, setModalData, apiKey) {
-    return function() {
+    return function () {
         enableModal()
-        fetchData(1, apiKey, null, true, props.id).then(function(runTime) {
+        fetchData(1, apiKey, null, true, props.id).then(function (runTime) {
             setModalData({
                 backdrop_path: props.backdrop_path,
                 release_date: props.release_date,

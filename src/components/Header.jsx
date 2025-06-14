@@ -3,9 +3,8 @@ import "../styles/Header.css"
 import { Sidebar } from './Sidebar'
 
 const filterOptions = {
-    "A-Z": (a,b) => a.title.localeCompare(b.title),
-    "Rating": (a,b) => b.vote_average - a.vote_average,
-    "Release Date": (a,b) => { new Date(b.release_date).getTime() - new Date(a.release_date).getTime()}
+    "A-Z": (a, b) => a.title.localeCompare(b.title),
+    "Rating": (a, b) => b.vote_average - a.vote_average
 }
 
 async function searchData(apiKey, searchValue) {
@@ -44,7 +43,7 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled, input, setInput) 
         let selectedInput = priorityInput != null ? priorityInput : input
         window.searchEnabled = true
 
-        searchData(apiKey, selectedInput).then(function(data) {
+        searchData(apiKey, selectedInput).then(function (data) {
             setMovieData(data.results)
 
             if (data.total_pages <= window.currentPage) {
@@ -63,14 +62,14 @@ function SearchBar(apiKey, setMovieData, setLoadButtonEnabled, input, setInput) 
         <div id="searchbar-options">
             <input type="text" id="search-bar" onChange={onChange} placeholder="Search.." value={input} onKeyDown={onKeyDown}></input>
             <button onClick={onSearchClick} id="search-submit">Submit</button>
-            <button onClick={onClearClick}id="search-clear">Clear</button>
+            <button onClick={onClearClick} id="search-clear">Clear</button>
         </div>
     )
 }
 
 
 export function setFilter(movieData, setMovieData) {
-    if (window.currentFilter == "") return 
+    if (window.currentFilter == "") return
 
     function deepCopy(array) {
         return array.map((item) => {
@@ -87,17 +86,15 @@ export function setFilter(movieData, setMovieData) {
             case "A-Z":
                 return deepCopy(movieData).sort(filterOptions["A-Z"])
             case "Release Date":
-                // return deepCopy(movieData).sort(filterOptions["Release Date"])
-
-                return deepCopy(movieData).sort(function(a,b) {
+                return deepCopy(movieData).sort(function (a, b) {
                     const movie1Date = new Date(b.release_date).getTime()
                     const movie2Date = new Date(a.release_date).getTime()
                     return movie1Date - movie2Date
                 })
             case "Rating":
                 return deepCopy(movieData).sort(filterOptions["Rating"])
-            default: 
-                return function() {}
+            default:
+                return function () { }
         }
     }
 
@@ -109,12 +106,12 @@ export function setFilter(movieData, setMovieData) {
 
 
 export function Header(props) {
-    
+
     function onDropdownChange(event) {
         window.currentFilter = event.target.value
         setFilter(props.movieData, props.setMovieData)
     }
-    
+
     return (
         <div id="header-div">
             <div id="title-div">

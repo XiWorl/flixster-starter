@@ -29,11 +29,11 @@ function closeModal() {
     modal.style.visibility = "hidden"
 }
 
-function Trailer({apiKey, movieId, setTrailerVideo}) {
-    if (movieId == null) return <iframe/>
+function Trailer({ apiKey, movieId, setTrailerVideo }) {
+    if (movieId == null) return <iframe />
 
-    fetchData(apiKey, movieId).then(function(data) {
-        data.filter(function(obj) {
+    fetchData(apiKey, movieId).then(function (data) {
+        data.filter(function (obj) {
             if (obj.type == "Trailer") return true
             return false
         })
@@ -48,7 +48,7 @@ function Trailer({apiKey, movieId, setTrailerVideo}) {
     return <iframe src="#" />
 }
 
-export function Modal({modalData, apiKey}) {
+export function Modal({ modalData, apiKey }) {
     let selectedImage = `https://image.tmdb.org/t/p/w500${modalData.backdrop_path}`
     const [trailerVideo, setTrailerVideo] = useState()
 
@@ -58,7 +58,7 @@ export function Modal({modalData, apiKey}) {
 
     if (selectedImage == null) {
         selectedImage = "Placeholder Image.png"
-    } 
+    }
 
     let genreString = ""
     if (modalData.genre_ids != null) {
@@ -72,7 +72,7 @@ export function Modal({modalData, apiKey}) {
     }
 
     if (genreString.length > 2) {
-        genreString = genreString.substring(0, genreString.length-2)
+        genreString = genreString.substring(0, genreString.length - 2)
     }
 
     function test(event) {
@@ -82,18 +82,18 @@ export function Modal({modalData, apiKey}) {
         <div id="the-modal" className="modal" onClick={closeModal}>
             <div className="modal-content" onClick={test}>
                 <span className="close" onClick={closeModal}>&times;</span>
-                    <div id="modal-top">
-                        <h2>{modalData.movieTitle}</h2>
-                        <img id="modal-img" src={selectedImage} alt={modalData.movieTitle} />
-                        <p id="release-date"><b>Release Date: </b>{modalData.release_date}</p>
-                        <p id="genres"><b>Genres: </b>{genreString}</p>
-                        <p id="overview"><b>Overview: </b>{modalData.overview}</p>
-                        <p id="overview"><b>RunTime: </b>{modalData.runtime}m</p>
-                    </div>
-                    <div id="modal-bottom">
-                        <Trailer apiKey={apiKey} movieId={modalData.movieId} setTrailerVideo={setTrailerVideo}/>
-                    </div>
+                <div id="modal-top">
+                    <h2>{modalData.movieTitle}</h2>
+                    <img id="modal-img" src={selectedImage} alt={modalData.movieTitle} />
+                    <p id="release-date"><b>Release Date: </b>{modalData.release_date}</p>
+                    <p id="genres"><b>Genres: </b>{genreString}</p>
+                    <p id="overview"><b>Overview: </b>{modalData.overview}</p>
+                    <p id="overview"><b>RunTime: </b>{modalData.runtime}m</p>
                 </div>
+                <div id="modal-bottom">
+                    <Trailer apiKey={apiKey} movieId={modalData.movieId} setTrailerVideo={setTrailerVideo} />
+                </div>
+            </div>
         </div>
     )
 }
