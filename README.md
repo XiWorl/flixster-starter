@@ -100,7 +100,7 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-s
 
 ### Walkthrough Video
 
-`https://flixster-starter-prg4.onrender.com`
+`https://www.loom.com/share/c706b1d9c8154313997fecd2f1d88346?sid=3bd3aa2b-c2f4-408f-824c-2e6582954506`
 
 ### Reflection
 
